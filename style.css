@@ -1,0 +1,1103 @@
+/* CSS Variables - Refined, more distinctive palette */
+:root {
+    /* Core palette - moved away from generic tech clichés */
+    --bg-dark: #050A1A;           /* Deeper, richer dark blue */
+    --bg-surface: #0A1224;        /* Slightly lighter for cards */
+    --text-primary: #E0E0E0;      /* Warm off-white instead of pure white */
+    --text-secondary: #B0B0B0;    /* Muted secondary text */
+
+    /* Accent colors - more professional, less "neon" */
+    --accent-upf: #D32F2F;        /* UPF-inspired red (more professional than bright cyan) */
+    --accent-warm: #FFC107;       /* Amber for highlights */
+    --accent-muted: #6C757D;      /* Gray for subtler accents */
+    --accent-text: #EF5350;       /* Lighter red for small text (AA contrast on dark) */
+    --on-accent: #FFFFFF;         /* Text on red fills */
+
+    /* Layout */
+    --max-width: 1200px;
+    --border-radius: 8px;         /* More modest radius */
+    --transition-speed: 0.3s;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* Links */
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--accent-text);
+}
+
+/* Layout Containers */
+.container {
+    width: 90%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header/Hero - More distinctive approach with logos */
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 4rem 1rem 6rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-dark);
+}
+
+/* Subtle pattern instead of generic grid */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(211, 47, 47, 0.08) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(255, 193, 7, 0.06) 0%, transparent 20%),
+        linear-gradient(45deg, transparent 49.5%, rgba(255, 255, 255, 0.02) 50%, transparent 51%),
+        linear-gradient(-45deg, transparent 49.5%, rgba(255, 255, 255, 0.02) 50%, transparent 51%);
+    background-size: 100% 100%, 100% 100%, 20px 20px, 20px 20px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+    animation: fadeUp 0.6s ease-out both;
+}
+
+/* Text content */
+.hero-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Logo section */
+.hero-logos {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.logo-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.logo-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--accent-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Logos fade in and out one after another (wave). Index --i is set in script.js */
+@property --logo-lo {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0.35;
+}
+
+.hero-logos {
+    --logo-step: 0.7s;
+    --logo-count: 9;
+    --logo-cycle: calc(var(--logo-count) * var(--logo-step));
+}
+
+.logos img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    padding: 0.5rem;
+    box-sizing: content-box;
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    animation: logo-fade var(--logo-cycle) ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * var(--logo-step) - var(--logo-cycle));
+    transition: --logo-lo var(--transition-speed) ease,
+                transform var(--transition-speed) ease,
+                filter var(--transition-speed) ease;
+}
+
+@keyframes logo-fade {
+    0%   { opacity: var(--logo-lo); }
+    8%   { opacity: 1; }
+    12%  { opacity: 1; }
+    22%  { opacity: var(--logo-lo); }
+    100% { opacity: var(--logo-lo); }
+}
+
+/* Hover: keep it lit and reveal the brand colours */
+.logos img:hover {
+    --logo-lo: 1;
+    transform: translateY(-3px);
+    border-color: var(--accent-upf);
+}
+
+/* Typography - more intentional hierarchy */
+.hero h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+    /* Clean, professional styling instead of gradient text */
+    color: var(--text-primary);
+    position: relative;
+}
+
+.hero h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--accent-upf);
+    border-radius: 2px;
+}
+
+.hero .title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--accent-text);
+    font-family: 'Inter', sans-serif;
+}
+
+.hero .tagline {
+    font-size: 1.125rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--accent-upf);
+    color: var(--on-accent);
+    padding: 0.875rem 2.25rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.2);
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+    background: #b72626; /* Slightly darker on hover */
+    color: var(--on-accent); /* a:hover would otherwise turn the text red */
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+/* Section Styles - more spacious and intentional */
+.section {
+    padding: clamp(4rem, 8vw, 6rem) 1rem;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: var(--accent-upf);
+    border-radius: 1px;
+}
+
+.section-header p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* About Section - more personal touch */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    line-height: 1.8;
+}
+
+.about-content p {
+    margin-bottom: 1.75rem;
+    opacity: 0.95;
+}
+
+.about-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    justify-content: center;
+}
+
+.tech-stack span {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1px solid rgba(211, 47, 47, 0.2);
+    transition: all var(--transition-speed) ease;
+}
+
+.tech-stack span:hover {
+    background: rgba(211, 47, 47, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Projects Section - more varied and engaging */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    max-width: var(--max-width);
+    margin: 1rem auto 0;
+}
+
+.project-card {
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+    /* Distinctive hover treatment - subtle but meaningful */
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-upf);
+    box-shadow: 0 8px 24px rgba(211, 47, 47, 0.15);
+    background: rgba(10, 18, 36, 0.7);
+}
+
+.project-card.featured {
+    border: 1px solid var(--accent-upf);
+    background: rgba(211, 47, 47, 0.05);
+}
+
+.project-card.featured:hover {
+    background: rgba(211, 47, 47, 0.1);
+    box-shadow: 0 8px 24px rgba(211, 47, 47, 0.25);
+}
+
+/* Project header - more distinctive */
+.project-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--accent-text);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.project-card h3::before {
+    content: '</>';
+    content: '</>' / '';
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.project-card p {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    font-size: 1.0rem;
+}
+
+/* Project badges */
+.project-badge {
+    display: inline-block;
+    background: var(--accent-upf);
+    color: var(--on-accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 1rem;
+    align-self: flex-start;
+}
+
+/* Tech tags - more refined */
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.project-tech span {
+    background: rgba(211, 47, 47, 0.1);
+    color: var(--accent-text);
+    padding: 0.35rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid rgba(211, 47, 47, 0.2);
+}
+
+/* Project links - more intentional */
+.project-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.project-links a {
+    background: rgba(211, 47, 47, 0.1);
+    color: var(--accent-text);
+    padding: 0.5rem 1.125rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all var(--transition-speed) ease;
+    border: 1px solid rgba(211, 47, 47, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.project-links a:hover {
+    background: var(--accent-upf);
+    color: var(--on-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(211, 47, 47, 0.2);
+}
+
+.project-links a:active {
+    transform: translateY(0);
+}
+
+.project-links a.live-link {
+    background: #2E7D32;
+    color: #fff;
+    border-color: transparent;
+}
+
+.project-links a.live-link:hover {
+    background: #1B5E20;
+    color: #fff;
+}
+
+/* Skills Section - more organized */
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.skill-category {
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.skill-category:hover {
+    border-color: var(--accent-upf);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.skill-category h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--accent-text);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.skill-category h3::before {
+    content: '</>';
+    content: '</>' / '';
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-list span {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    padding: 0.4rem 0.9rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed) ease;
+}
+
+.skill-list span:hover {
+    background: rgba(211, 47, 47, 0.1);
+    color: var(--accent-text);
+    transform: translateY(-1px);
+}
+
+/* Education Section - highlighting UPF */
+.education-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    gap: 2.5rem;
+}
+
+.education-item {
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    position: relative;
+    transition: all var(--transition-speed) ease;
+}
+
+.education-item:hover {
+    border-color: var(--accent-upf);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.education-item h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--accent-text);
+}
+
+.education-item p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+.education-item .date {
+    font-weight: 500;
+    opacity: 0.8;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* UPF logo treatment - more integrated */
+.upf-logo-watermark {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 70px;
+    height: 70px;
+    opacity: 0.15;
+    pointer-events: none;
+    filter: grayscale(1) invert(1);
+    mix-blend-mode: screen;
+}
+
+/* Contact Section - more balanced */
+.contact-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 3.5rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+#contact-form {
+    display: grid;
+    gap: 1.75rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group textarea {
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--border-radius);
+    padding: 0.875rem;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-upf);
+    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.2);
+    background: var(--bg-dark);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+.contact-info p a {
+    color: var(--accent-text);
+    font-weight: 500;
+    transition: color var(--transition-speed);
+}
+
+.contact-info p a:hover {
+    color: var(--accent-warm);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed) ease;
+}
+
+.social-links a:hover {
+    background: var(--accent-upf);
+    color: var(--on-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(211, 47, 47, 0.2);
+}
+
+/* Footer - more refined */
+footer {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    letter-spacing: 0.5px;
+}
+
+/* Animations - more subtle and purposeful */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* Responsive Adjustments - more thoughtful */
+@media (max-width: 1024px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .skills-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .hero-text {
+        align-items: center;
+    }
+
+    .hero-logos {
+        align-items: center;
+        margin-top: 3rem;
+    }
+
+    .logo-group {
+        align-items: center;
+    }
+
+    .logos {
+        justify-content: center;
+    }
+
+    .hero h1::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: clamp(2rem, 4vw, 2.75rem);
+    }
+
+    .hero .title {
+        font-size: 1.25rem;
+    }
+
+    .section-header h2 {
+        font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    }
+
+    .hero {
+        padding: 3rem 1rem 5rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .education-content {
+        grid-template-columns: 1fr;
+    }
+
+    .logo-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .logos img {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Dark mode preference respect */
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-dark: #F8F9FA;
+        --bg-surface: #FFFFFF;
+        --text-primary: #212529;
+        --text-secondary: #495057;
+        --accent-upf: #D32F2F;
+        --accent-warm: #FFC107;
+        --accent-text: #C62828;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        color: var(--text-primary);
+    }
+
+    .hero::before {
+        opacity: 0.3;
+    }
+
+    .project-card,
+    .skill-category,
+    .education-item {
+        background: var(--bg-surface);
+        border: 1px solid rgba(33, 37, 41, 0.1);
+    }
+
+    .project-card:hover,
+    .skill-category:hover,
+    .education-item:hover {
+        background: #F0F2F5;
+    }
+
+    .cta-button {
+        background: var(--accent-upf);
+        color: white;
+    }
+
+    .cta-button:hover {
+        background: #b72626;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        background: white;
+        color: #212529;
+        border: 1px solid #ced4da;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: var(--accent-upf);
+        box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.25);
+    }
+
+    .tech-stack span,
+    .project-tech span,
+    .skill-list span {
+        background: #F8F9FA;
+        color: #212529;
+        border: 1px solid #dee2e6;
+    }
+
+    .tech-stack span:hover,
+    .project-tech span:hover,
+    .skill-list span:hover {
+        background: #E9ECEF;
+    }
+
+    .logos img {
+        border-color: rgba(33, 37, 41, 0.12);
+    }
+}
+
+/* Social icons: were unsized (rendered at intrinsic size) and the GitHub one was black on dark */
+.social-links img {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
+    transition: filter var(--transition-speed) ease;
+}
+
+.social-links a:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 8rem;
+}
+
+/* Keyboard focus */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--accent-warm);
+    outline-offset: 3px;
+}
+
+@media (prefers-color-scheme: light) {
+    .social-links img {
+        filter: brightness(0);
+    }
+
+    .upf-logo-watermark {
+        filter: grayscale(1);
+        mix-blend-mode: multiply;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .logos img {
+        animation: none;
+        opacity: 0.8;
+    }
+
+    .logos img:hover {
+        opacity: 1;
+    }
+}
+
+
+/* ---- Navigation ---- */
+html { scroll-padding-top: 4.5rem; }
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    background: var(--accent-upf);
+    color: var(--on-accent);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+}
+
+.skip-link:focus { top: 1rem; color: var(--on-accent); }
+
+.site-nav {
+    --nav-bg: rgba(5, 10, 26, 0.8);
+    --nav-hover: rgba(255, 255, 255, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.625rem max(1rem, calc((100% - var(--max-width)) / 2));
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-nav ul { display: flex; gap: 0.25rem; list-style: none; }
+
+.site-nav a {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+    color: var(--text-primary);
+    background: var(--nav-hover);
+}
+
+.site-nav a.active { box-shadow: inset 0 -2px 0 var(--accent-upf); }
+
+.site-nav .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-left: 0;
+}
+
+.site-nav .brand:hover { background: none; color: var(--accent-text); }
+
+/* ---- Hero actions ---- */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+.cta-button.secondary {
+    background: transparent;
+    color: var(--text-primary);
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: calc(0.875rem - 1px) calc(2.25rem - 1px);
+}
+
+.cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent-upf);
+    color: var(--text-primary);
+    box-shadow: none;
+}
+
+/* ---- Form status ---- */
+.form-status { min-height: 1.5rem; font-size: 0.95rem; color: var(--text-secondary); }
+
+@media (max-width: 1024px) {
+    .hero-actions { justify-content: center; }
+}
+
+@media (max-width: 600px) {
+    .site-nav { justify-content: center; }
+    .site-nav .brand { display: none; }
+    .site-nav a { padding: 0.4rem 0.5rem; font-size: 0.875rem; }
+}
+
+@media (prefers-color-scheme: light) {
+    .site-nav {
+        --nav-bg: rgba(248, 249, 250, 0.85);
+        --nav-hover: rgba(0, 0, 0, 0.05);
+        border-bottom-color: rgba(33, 37, 41, 0.1);
+    }
+
+    .cta-button.secondary { border-color: rgba(33, 37, 41, 0.25); }
+
+    .cta-button.secondary:hover { background: rgba(0, 0, 0, 0.04); }
+}
+
+
+/* ---- Experience timeline ---- */
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    list-style: none;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.timeline-item { position: relative; margin-bottom: 2.5rem; }
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(1px - 2rem);
+    top: 0.55rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-upf);
+    box-shadow: 0 0 0 4px var(--bg-dark);
+}
+
+.timeline-item h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent-text);
+}
+
+.timeline-item .org { font-weight: 600; }
+
+.timeline-item .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0.25rem 0 0.75rem;
+}
+
+.timeline-item .project-tech { margin: 1rem 0 0; }
+
+@media (max-width: 600px) {
+    .site-nav ul { flex-wrap: wrap; justify-content: center; }
+    .site-nav a { font-size: 0.8125rem; }
+}
+
+@media (prefers-color-scheme: light) {
+    .timeline::before { background: rgba(33, 37, 41, 0.15); }
+}
